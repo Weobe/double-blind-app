@@ -111,7 +111,7 @@ template VerifyMerkleProof(size) {
 // proves that user knows an RSA signature for a message, given l public keys (i.e. values of n)
 template GroupSignature(n, k, nKeys) {
     var d = 65537;
-    signal input message[k];
+    signal input message[5];
     signal input doubleBlindMessage[k];
     signal input publicKeys[nKeys][k];
     signal input signature[k];
@@ -138,4 +138,4 @@ template GroupSignature(n, k, nKeys) {
 }
 
 
-component main {public [message, doubleBlindMessage, publicKeys]} = GroupSignature(120, 35, 3);
+component main {public [message, publicKeys]} = GroupSignature(120, 35, 3);

@@ -189,7 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Verify mode
                 const proof = JSON.parse(input);
                 console.log(proof);
-                const parsedHashedMessage = await processMessage(message);
+                console.log("hashed message:", sha512(str2bytes(message)));
+                console.log("hashed message in hex: " + bytes2hex(sha512(str2bytes(message))));
+                const hashedMessageInt = BigInt("0x" + bytes2hex(sha512(str2bytes(message))));
+                const parsedHashedMessage = splitBigIntToChunks(hashedMessageInt, 120, 5);
                 const parsedHashedDoubleBlindMessage = await processMessage(doubleBlindMessage);
                 const publicKeys = processKeys(data);
                 const vkey = await fetch("circuit_files/verification_key.json").then( function(res) {
@@ -204,7 +207,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultMessage.style.display = 'block';
             } else {
                 // Generate mode
-                const parsedHashedMessage = await processMessage(message);
+                console.log("hashed message:", await sha512(str2bytes(message)));
+                console.log("hashed message in hex: " + bytes2hex(await sha512(str2bytes(message))));
+                const hashedMessageInt = BigInt("0x" + bytes2hex(await sha512(str2bytes(message))));
+                const parsedHashedMessage = splitBigIntToChunks(hashedMessageInt, 120, 5);
                 const parsedHashedDoubleBlindMessage = await processMessage(doubleBlindMessage);
                 const processedSignature = await processSignature(input);
                 const parsedSignature = processedSignature.signature;
