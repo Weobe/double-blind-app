@@ -138,4 +138,4 @@ template GroupSignature(n, k, nKeys) {
 }
 
 
-component main {public [message, publicKeys]} = GroupSignature(120, 35, 3);
+component main {public [message, publicKeys]} = GroupSignature(120, 35, 300);

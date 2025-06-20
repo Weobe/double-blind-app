@@ -1,0 +1,40 @@
+{
+  "group_members": {
+    "The-Turtle": {
+      "publicKeys": [
+        {
+          "id": 124284426,
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSeqUGIrvHAAFF3uZ1eOm5yGItZQEYkcLCJo4VSpqBvdIep1LWrcIPYASiFNT7bDX1rJ50qKsx6o6y9XJP6e5nIF2j+KJ8Qwf0h2yqqUm6uoB5MwKqpEMmk4fYJ+MmUc7yzTaaDVboM+KtO9wk7JcH5WXuvpTc/GPqCdaJFwYe9DZXsueoTcCPKDiU2MgivJGulBVcNGqagg1Zs+Pv4uU6XA49geMvpLHd5S2zZraG0XlE/aCj9hGoANvvJcyaGKuwmOplmzJ9s0J+8j86/3v5frI4WPTYnX6SInVaCSjhJGg4OvIT8NVBvFdu35KFvQqQFqsXWM3hZ0UGVx6XBSUaFCh4TRqOgVngv6WZ2tdRhq7gn3XHJ+kuIP9Rd4Sl3+pY4vb0sTHbeRciNRlvccobn1ao8eZyReYdfe+L7/T3rxmlqIVXLJGIRno6XWS4cOvdOFHxF7ouf7Ll24GSY0/yZqvXDojSCg1Cpjg35SEGJ06KqO1sy2p88WVjt3Stc2zhlYEQVSNXvBzRHTV4Xi4iT68UT3txHm0snRhNIxkEAnA3bBNEcAOvn/c5RiC44OGl/N3rrLQAaoohL1Pt5nRv2slA8XDAfWtP7QKcgSIsmXGbztKkcmWb3mVy+YSvaLLi7lvi6r1HtADFBbiojmRKYZxGHuz8qJEFiCxQHnop2Q==",
+          "type": "RSA"
+        }
+      ]
+    },
+    "Weobe": {
+      "publicKeys": [
+        {
+          "id": 124284504,
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHq6HsKjUDHNza6Ql1/1swbw1Af29u3L9/pSLtxB/glMjX3D+nFf66R/R2AIVRKZ5+dLyKwxWbNUX9JNbXv4pwjUCjI6kh0khTROl1MtvQV0jRXWv2KFMg4bXyb/+vZvVxGQZwgjty8d6VZxtY9S2ip9NK4X7XHmXDMeXbweHrllJM3VkC6ZNdasLXRr/iNf3JoMuRExYC5CY9kQ2RLVbav3ARF/kdhlfQsB8Gd5SfxNkD2GNDdpJ8EApgNABput6nOC84lztXqyKWjFVALD8dplq0R5UG4wQxbiWIKDkbRd2GmWyXVK1t/U39AVhWbLrZkZ/VV/tZmXLWxDJriAFNc168pgV3gnY8iyYm3nfi58xj1XuoZbQLrVjFYo/XQWjBkIvv6eVZAYTp5qDwLFAH4YB7pPXE4jCybZ0fibhOXSpSovQbHGjkEO/SIevYBJsrKnZqfpzmW7N5Dcc/u5YnSbdBGJoZAkwcMMZpka2NcWoBzkUFs/+TFPzhQ4dHfpmHKrDjWJPXgMQmYTxDoPDZ/y7L4HFDtOTaE0vER8EODiJpN+pQnTeapf3ctRlNbrt84fZeX0LMPy6fKvLF2FNnlVhEqxXnbg1jxumN+Haeb6y6Flv6ERyzPi1zyc2HY3sw9NdAxJG85O/LaiJQZiaNNUxI0EFv856FVKC0NlT3dQ==",
+          "type": "RSA"
+        }
+      ]
+    },
+    "lizahorokh": {
+      "publicKeys": [
+        {
+          "id": 123750142,
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1c4GRcAP7b9RcrnLo+Mz4kK4fepSLtN4JSz+uLKNmA7vsSN/HYXsTmY8f8Zn/e5HDsCVL185Ar3GCuP18Q5Kp4bv5Sakvqgt4EjByBCxD8/2cONp36I7SSzlksm9heYY46qp4FNnaW/kjF1FI6k4fTLid/kRcQ37hz9EKwQg5SoTNpOwElmkr5dhj61yfylfRqwIy3QDFJignw82LSjtCDPkcS4rvJhAVBd2bnYzgdvO8pARIZjSeWktutqHx1wP4ywWV6N3p5doW09FRtRTGplvCp5XK2axkQ9Esdmsemi8ncFHJyBzC19saI88vovA+G4AO0YNPC6J4NzlnUHgWGA4kPP/ygLw7X8ABDfRb0V1Yzeqahrylv8cM8U6N70sHqsJ+D/16Hn1UJJGYoz8Jpvv2yhndfhjIgvNoL5uOlkgTgt58I35cYUTcqYMi/Qzw7m77zvP2JxtEhNtEf0kYB0ZqcpShVvA3kWLZ4St3cjgSVoyVcdhr9e4QlQ90khoQra5FFNzrjsGUCpHuAlMAtKTj5kS/RcU9O8j7nsVUtej2qYhePlkONJl5blIOpqccytGyhuqW7UxT1Sf/OsfG2klBlIG9XrAiQLpCi8IjXxB6muhR/v0BTBqKFye2IvHkpIEfVVo+0Hh4b3Lv4WW25Vg7cyIS+RirDjpzYWDxUw==",
+          "type": "RSA"
+        }
+      ]
+    },
+    "psquare1": {
+      "publicKeys": [
+        {
+          "id": 124284544,
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpcGyI8jC+r1EcksaZwVM4vKFzrfMoZ+fDEW6dhQ7OVSwq+T0erXssZ+w2IvTYKIy3aOiebAxPl+NdLLrpXWdq8g/yt0MhF7fbaAj7PLJukpSiWrgvu6/tkd3hTkhN8YC2FbjKSgq6fYKm95nt0BplnVn129ZXEaCKxRcxrQifumf1donbIfyRKScvulDu6ojusNvuPhUPPKTE1A6x5A4uXIU4aEn+vkpZbCbVzsNX7N9YHOmphtxuJAKoqIDZ7NxaeYXQgUoPvZagu/RkYQgL8+B8kqH/B4Hj6pIaXSxiwBUoxovnDp/0Si8FsXfKwj2BWnN2HbzqV78cMrI/HDxIkoFa20zLkA3ATIvEX7UMTd9Q+JritrDWCngxfb+QC91nj/g9MfufcFUDZkyhHyYmikdbqMSxAXgSkmil6QHr5PiehmuwvY53QWjokNIBHn3XkCmYdlqD7LgvHV4Bj69XYRD+rWvYH7uzNFmgdMSEtwYWOT9Pk53U9yCmrRzfAYen/Fp1MBHYH2eRe+ICE6LI+xUI/LqOj1tLJcC+c0lxmDcUs5loDLM6fpOotymHmoZERdPAOcxjy4siNN027EatSLBXlQ7Z2kzJQXaEHYQ6GZ6TE2HLZeH9COnNmX9rKR/E7Ohasx1Co9Lm2ZDhPJV5mtD3FSo7DRghuHmcPmgTjQ==",
+          "type": "RSA"
+        }
+      ]
+    }
+  }
+}

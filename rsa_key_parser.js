@@ -148,8 +148,12 @@ async function messageToBigInt(msgStr) {
   return output;
 }
 
-function parseSSHSignature(b64) {
+function parseSSHSignature(raw) {
     // Decode Base64 to a Uint8Array
+    const b64 = raw
+    .replace(/-----(BEGIN|END) SSH SIGNATURE-----/g, '')
+    .replace(/\s+/g, '');
+    console.log("b64:", b64);
     const binStr = atob(b64);
     const buf = new Uint8Array(binStr.length);
     for (let i = 0; i < binStr.length; i++) {
@@ -233,14 +237,16 @@ function parseSSHSignature(b64) {
     }
 }
 
-// Make all helper functions available globally
-window.parseRSAPublicKey = parseRSAPublicKey;
-window.splitBigIntToChunks = splitBigIntToChunks;
-window.sha512 = sha512;
-window.str2bytes = str2bytes;
-window.sshString = sshString;
-window.concat = concat;
-window.hex2bytes = hex2bytes;
-window.bytes2hex = bytes2hex;
-window.messageToBigInt = messageToBigInt;
-window.parseSSHSignature = parseSSHSignature;
+module.exports = {
+    parseRSAPublicKey,
+    splitBigIntToChunks,
+    sha512,
+    str2bytes,
+    sshString,
+    concat,
+    hex2bytes,
+    bytes2hex,
+    messageToBigInt,
+    parseSSHSignature
+};
+

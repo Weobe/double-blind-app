@@ -51,25 +51,5 @@ mv circuit.sym circuit_files/circuit.sym
 rm circuit_0003.zkey
 
 
-# Step 5: Open browser
-echo "Step 5: Opening http://localhost:3001 in your browser..."
-if command -v xdg-open > /dev/null; then
-    xdg-open "http://localhost:3001" 2>/dev/null &
-elif command -v open > /dev/null; then
-    open "http://localhost:3001" 2>/dev/null &
-elif command -v python3 > /dev/null; then
-    python3 -m webbrowser "http://localhost:3001" 2>/dev/null &
-else
-    echo "Warning: Could not automatically open browser. Please visit http://localhost:3001 manually."
-fi
-
-# Step 6: Start the Node.js server
-echo "Step 6: Starting Node.js server..."
-node server.js
-if [ $? -ne 0 ]; then 
-    echo "Error: node server.js failed."
-    exit 1
-fi
-
 # Final message
-echo "All steps completed. The server is now running at http://localhost:3001" 
+echo "All steps completed. You can now start sending kudos!" 
