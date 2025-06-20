@@ -1,10 +1,12 @@
 const axios = require('axios');
 const { Octokit } = require('@octokit/rest');
 const fs = require('fs').promises;
+const { Command } = require('commander');
 // Initialize Octokit with GitHub token
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN
 });
+const program = new Command();
 
 async function getUserPublicKeys(username) {
     try {
@@ -42,33 +44,34 @@ function filterED25519Keys(publicKeys) {
     });
 }
 
-async function scrapePublicKeys(initial_filename) {
-    const groupList = await fs.readFile(initial_filename, 'utf8');
-    const groupListArray = JSON.parse(groupList);
-
-    console.log("userListArray:", groupListArray);
-    console.log("userListArray Sorted:", groupListArray.sort());
+async function scrapePublicKeys(groupListArray) {
+    groupListArray.sort();
+    console.log("groupListArray:", groupListArray);
     // Get public keys for each user in the list
     const results = {
         group_members: {}
     };  
     for (const username of groupListArray) {
-        const publicKeys = await getUserPublicKeys(username);
-        if (publicKeys.length > 0) {
-            // Filter for RSA keys only
-            const rsaKeys = filterRSAKeys(publicKeys);
-            if (rsaKeys.length > 0) {
-                results.group_members[username] = {
-                    publicKeys: [
-                        ...rsaKeys.map(key => ({
-                            id: key.id,
-                            key: key.key,
-                            title: key.title,
-                            type: getKeyType(key.key)
-                        }))
-                    ]
-                };
+        try{
+            const publicKeys = await getUserPublicKeys(username);
+            if (publicKeys.length > 0) {
+                // Filter for RSA keys only
+                const rsaKeys = filterRSAKeys(publicKeys);
+                if (rsaKeys.length > 0) {
+                    results.group_members[username] = {
+                        publicKeys: [
+                            ...rsaKeys.map(key => ({
+                                id: key.id,
+                                key: key.key,
+                                title: key.title,
+                                type: getKeyType(key.key)
+                            }))
+                        ]
+                    };
+                }
             }
+        } catch (error) {
+            console.error(`Error fetching public keys for ${username}:`, error.message);
         }
     }
     
@@ -77,20 +80,40 @@ async function scrapePublicKeys(initial_filename) {
 
 // Example usage
 async function main() {
-    let initial_filename;
-    if (process.argv.length < 3) {
-        console.log('Using default group list at ./github_user_list.json');
-        console.log('Usage: node github_scraper.js <json_file_with_list_of_github_usernames>');
-        initial_filename = `github_user_list.json`;
-    } else {
-        initial_filename = process.argv[2];
-    }
+    program
+    .name('github-scraper')
+    .description('Scrape public keys from GitHub')
+    .version('0.0.0');
+    program
+    .description('Scrape public keys from GitHub')
+    .option('--path <Path To Json List of Group Public Keys>', 'Specify path to the group public keys', "github_user_list.json")
+    .option('--manual', "Manually enter the list of usernames")
+    .parse(process.argv);
 
-    const results = await scrapePublicKeys(initial_filename);
+    const args = program.parse().opts();
+    let groupListArray;
+    if (args.manual) {
+        console.log("Manually entering the list of usernames");
+        const prompt = require('prompt-sync')();
+        console.log("Enter the list of usernames. Press enter to add a username. Press 'done' when you are finished.");
+        groupListArray = [];
+        while(true){
+            const member = prompt("Enter the next username: ");
+            if (member === 'done') {
+                break;
+            }
+            groupListArray.push(member);
+        }
+        console.log("groupListArray:", groupListArray);
+    } else{
+        const groupList = await fs.readFile(args.path, 'utf8');
+        groupListArray = JSON.parse(groupList);
+    }
+    
+    const results = await scrapePublicKeys(groupListArray);
     
     // Create filename from repository name
     const final_filename = `github_user_list_public_keys.json`;
-    
     // Save results to file
     try {
         await fs.writeFile(final_filename, JSON.stringify(results, null, 2));

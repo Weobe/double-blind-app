@@ -144,7 +144,6 @@ async function messageToBigInt(msgStr) {
   );
 
   let output = BigInt("0x" + bytes2hex(EM));
-  console.log(typeof output);
   return output;
 }
 
@@ -153,7 +152,6 @@ function parseSSHSignature(raw) {
     const b64 = raw
     .replace(/-----(BEGIN|END) SSH SIGNATURE-----/g, '')
     .replace(/\s+/g, '');
-    console.log("b64:", b64);
     const binStr = atob(b64);
     const buf = new Uint8Array(binStr.length);
     for (let i = 0; i < binStr.length; i++) {

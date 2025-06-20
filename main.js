@@ -25,8 +25,6 @@ async function processMessage(message) {
     try {
         // Convert message to BigInt and log to console
         const messageAsBigInt = await messageToBigInt(message);
-        console.log('Message:', message);
-        //console.log('Message as BigInt:', formatHexString(bigIntToHex(messageAsBigInt)));
         return splitBigIntToChunks(messageAsBigInt);
     } catch (error) {
         console.error('Error processing message:', error);
@@ -43,14 +41,11 @@ function processSignature(signature) {
     let parsedSignatureChunks;
     try {
         const parsed = parseSSHSignature(signature);
-        //console.log('Parsed signature:', parsed);
         
         parsedSignatureChunks = {
             signature: splitBigIntToChunks(parsed.signature),
             publicKey: splitBigIntToChunks(parsed.publicKey),
         };
-        //console.log('Public Key:', formatHexString(bigIntToHex(parsed.publicKey)));
-        //console.log('Signature:', formatHexString(bigIntToHex(parsed.signature)));
     } catch (error) {
         console.error('Error parsing signature:', error);
         parsedSignatureChunks = [];
@@ -93,23 +88,19 @@ async function main() {
     try{
         const groupPublicKeys_file = await fs.readFileSync(groupPublicKeysPath, 'utf8');
         groupPublicKeys = JSON.parse(groupPublicKeys_file);
-        //console.log("groupPublicKeys:", groupPublicKeys);
     } catch (error) {
         console.error('Error reading group public keys file:', error);
         process.exit(1);
     }
-    //console.log("groupPublicKeys:", groupPublicKeys);
     const listOfUsernames = Object.keys(groupPublicKeys.group_members);
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth(); // Remember to add 1 for typical month representation
     const day = now.getDate();
     const date = `${year}-${month + 1}-${day}`;
+
     const doubleBlindMessage = "0xPARC" // This could change?
     
-    // Generate mode
-    console.log("hashed message:", await sha512(str2bytes(message)));
-    console.log("hashed message in hex: " + bytes2hex(await sha512(str2bytes(message))));
     const hashedMessageInt = BigInt("0x" + bytes2hex(await sha512(str2bytes(message))));
     const parsedHashedMessage = splitBigIntToChunks(hashedMessageInt, 120, 5);
     const parsedHashedDoubleBlindMessage = await processMessage(doubleBlindMessage);
@@ -119,6 +110,7 @@ async function main() {
     const publicKeys = processKeys(groupPublicKeys);
 
     let proofStr;
+    console.log("Generating proof...");
     try {
         const { proof, publicSignals} = await groth16.fullProve({
             message: parsedHashedMessage,
@@ -127,9 +119,7 @@ async function main() {
             signature: parsedSignature,
             correctKey: parsedPublicKey,
         }, "circuit_files/circuit.wasm", "circuit_files/circuit_final.zkey");
-        // Display the proof
         proofStr = JSON.stringify(proof, null, 2);
-        console.log("Proof:", proofStr);
     } catch (error) {
         console.error("Error generating proof:", error);
         throw new Error("Failed to generate proof");
@@ -138,13 +128,12 @@ async function main() {
     
     const data = {
         to: "duruozer13@gmail.com", // Specify the recipient, if any
-        header: "Test", // Specify the header or title of the message
+        header: "Kudos!", // Specify the header or title of the message
         message: message, // The main content of the message
         senders: listOfUsernames, // List of senders or contributors
         group_signature: proofStr, // The group signature generated from the proof
         date: date // The current date in YYYY-MM-DD format
     };
-    console.log("data:", data);
 
     fetch('http://localhost:8000', {
         method: 'POST', // Specify the HTTP method as POST
