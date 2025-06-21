@@ -52,4 +52,4 @@ rm circuit_0003.zkey
 
 
 # Final message
-echo "All steps completed. You can now start sending kudos!" 
+echo "Compilation complete!" 
