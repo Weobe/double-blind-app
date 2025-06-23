@@ -39,5 +39,6 @@ edit-kudos-group --manual
 
 Use option `--help` for more information about each command
 
+The list of kudos' sent far can be found here: http://3.144.19.40:8080/
 
 The backbone of the project is copied from: https://github.com/psquare1/repo-group-sign/
