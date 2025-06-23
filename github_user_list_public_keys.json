@@ -18,6 +18,15 @@
         }
       ]
     },
+    "lizahorokh": {
+      "publicKeys": [
+        {
+          "id": 123750142,
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1c4GRcAP7b9RcrnLo+Mz4kK4fepSLtN4JSz+uLKNmA7vsSN/HYXsTmY8f8Zn/e5HDsCVL185Ar3GCuP18Q5Kp4bv5Sakvqgt4EjByBCxD8/2cONp36I7SSzlksm9heYY46qp4FNnaW/kjF1FI6k4fTLid/kRcQ37hz9EKwQg5SoTNpOwElmkr5dhj61yfylfRqwIy3QDFJignw82LSjtCDPkcS4rvJhAVBd2bnYzgdvO8pARIZjSeWktutqHx1wP4ywWV6N3p5doW09FRtRTGplvCp5XK2axkQ9Esdmsemi8ncFHJyBzC19saI88vovA+G4AO0YNPC6J4NzlnUHgWGA4kPP/ygLw7X8ABDfRb0V1Yzeqahrylv8cM8U6N70sHqsJ+D/16Hn1UJJGYoz8Jpvv2yhndfhjIgvNoL5uOlkgTgt58I35cYUTcqYMi/Qzw7m77zvP2JxtEhNtEf0kYB0ZqcpShVvA3kWLZ4St3cjgSVoyVcdhr9e4QlQ90khoQra5FFNzrjsGUCpHuAlMAtKTj5kS/RcU9O8j7nsVUtej2qYhePlkONJl5blIOpqccytGyhuqW7UxT1Sf/OsfG2klBlIG9XrAiQLpCi8IjXxB6muhR/v0BTBqKFye2IvHkpIEfVVo+0Hh4b3Lv4WW25Vg7cyIS+RirDjpzYWDxUw==",
+          "type": "RSA"
+        }
+      ]
+    },
     "psquare1": {
       "publicKeys": [
         {

@@ -4,6 +4,7 @@
   "description": "Creates and verifies double-blind group signatures. The double blind message is \"0xPARC\". Currently only does linear-sized group-signature and works only for RSA",
   "main": "main.js",
   "dependencies": {
+    "@octokit/rest": "^22.0.0",
     "accepts": "^2.0.0",
     "ansi-regex": "^4.1.1",
     "ansi-styles": "^4.3.0",
@@ -137,7 +138,6 @@
     "word-wrap": "^1.2.5",
     "wrappy": "^1.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

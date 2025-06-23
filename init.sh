@@ -60,7 +60,7 @@ install_commands() {
 
 download_circuit_files() {
   mkdir -p "$CIRCUIT_DIR"
-  echo "⬇️ Downloading circuit files..."
+  echo "⬇️ Downloading circuit files... (this may take a while)"
   download "$CIRCUIT_URL_BASE/circuit.wasm" "$CIRCUIT_DIR/circuit.wasm"
   download "$CIRCUIT_URL_BASE/circuit_final.zkey" "$CIRCUIT_DIR/circuit_final.zkey"
   echo "✅ Circuit files downloaded to $CIRCUIT_DIR"
@@ -77,7 +77,7 @@ echo "Setting up environment..."
 install_commands \
                 "./send-kudos.sh" "send-kudos" \
                 "./edit-kudos-group.sh" "edit-kudos-group"
-                
+
 ensure_path_in_shell_rc
 # Final message
 echo "All steps completed. You can now start sending kudos!" 
