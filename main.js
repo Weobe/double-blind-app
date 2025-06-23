@@ -1,5 +1,5 @@
-//import { groth16 } from "snarkjs";
 const groth16 = require('snarkjs').groth16;
+const crypto = require('crypto');
 const { Command } = require('commander');
 const program = new Command();
 const prompt = require('prompt-sync')();
@@ -343,9 +343,9 @@ async function main() {
     .description('Send anonymous kudos to 0xPARC group members')
     .version('0.0.0');
     program
-    .description('Send kudos')
-    .option('--sig <Path To Signature>', 'Specify path to your double-blind signature', "github_rsa.sig")
-    .option('--gpk <Path To Group Public Keys>', 'Specify path to the group public keys', "github_user_list_public_keys.json")
+    .description('Send anonymous kudos to 0xPARC group members')
+    .option('--sig <Path To Signature>', 'Specify path to your double-blind signature', "./github_rsa.sig")
+    .option('--gpk <Path To Group Public Keys>', 'Specify path to the group public keys', "./github_user_list_public_keys.json")
     .parse(process.argv);
     const args = program.parse().opts();
     let message = prompt("Message:");
@@ -398,7 +398,7 @@ async function main() {
             publicKeys: publicKeys,
             signature: parsedSignature,
             correctKey: parsedPublicKey,
-        }, "circuit_files/circuit.wasm", "circuit_files/circuit_final.zkey");
+        }, "./circuit_files/circuit.wasm", "./circuit_files/circuit_final.zkey");
         proofStr = JSON.stringify(proof, null, 2);
     } catch (error) {
         console.error("Error generating proof:", error);

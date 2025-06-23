@@ -81,11 +81,11 @@ async function scrapePublicKeys(groupListArray) {
 // Example usage
 async function main() {
     program
-    .name('github-scraper')
-    .description('Scrape public keys from GitHub')
+    .name('edit-kudos-group')
+    .description('Change the list of github usernames in the kudos group signature')
     .version('0.0.0');
     program
-    .description('Scrape public keys from GitHub')
+    .description('Change the list of github usernames in the kudos group signature')
     .option('--path <Path To Json List of Group Public Keys>', 'Specify path to the group public keys', "github_user_list.json")
     .option('--manual', "Manually enter the list of usernames")
     .parse(process.argv);
