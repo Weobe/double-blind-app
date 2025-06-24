@@ -76,8 +76,7 @@ download_circuit_files
 echo "Setting up environment..."
 
 install_commands \
-                "send-kudos.sh" "send-kudos" \
-                "edit-kudos-group.sh" "edit-kudos-group"
+                "send-kudos.sh" "send-kudos"
 
 ensure_path_in_shell_rc
 # Final message
