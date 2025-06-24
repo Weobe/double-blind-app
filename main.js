@@ -1,9 +1,86 @@
 const groth16 = require('snarkjs').groth16;
 const crypto = require('crypto');
+const axios = require('axios');
+const { Octokit } = require('@octokit/rest');
 const { Command } = require('commander');
 const program = new Command();
 const prompt = require('prompt-sync')();
 const fs = require('node:fs');  
+const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN
+});
+
+// -------- GITHUB PUBLIC KEY SCRAPER --------
+
+async function getUserPublicKeys(username) {
+    try {
+        const response = await octokit.users.listPublicKeysForUser({
+            username
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error fetching public keys for ${username}:`, error.message);
+        return [];
+    }
+}
+
+// Function to determine key type
+function getKeyType(keyString) {
+    if (keyString.startsWith('ssh-rsa')) return 'RSA';
+    if (keyString.startsWith('ssh-ed25519')) return 'ED25519';
+    if (keyString.startsWith('ecdsa-sha2-nistp256')) return 'ECDSA';
+    if (keyString.startsWith('ssh-dss')) return 'DSA';
+    return 'UNKNOWN';
+}
+
+// Function to filter out non-RSA keys
+function filterRSAKeys(publicKeys) {
+    return publicKeys.filter(key => {
+        const keyType = getKeyType(key.key);
+        return keyType === 'RSA';
+    });
+}
+
+function filterED25519Keys(publicKeys) {
+    return publicKeys.filter(key => {
+        const keyType = getKeyType(key.key);
+        return keyType === 'ED25519';
+    });
+}
+
+async function scrapePublicKeys(groupListArray) {
+    groupListArray.sort();
+    // Get public keys for each user in the list
+    const results = {
+        group_members: {}
+    };  
+    for (const username of groupListArray) {
+        try{
+            const publicKeys = await getUserPublicKeys(username);
+            if (publicKeys.length > 0) {
+                // Filter for RSA keys only
+                const rsaKeys = filterRSAKeys(publicKeys);
+                if (rsaKeys.length > 0) {
+                    results.group_members[username] = {
+                        publicKeys: [
+                            ...rsaKeys.map(key => ({
+                                id: key.id,
+                                key: key.key,
+                                title: key.title,
+                                type: getKeyType(key.key)
+                            }))
+                        ]
+                    };
+                }
+            }
+        } catch (error) {
+            console.error(`Error fetching public keys for ${username}:`, error.message);
+        }
+    }
+    
+    return results;
+}
+
 
 // -------- RSA KEY PARSING FUNCTIONS --------
 function parseRSAPublicKey(keyString) {
@@ -345,7 +422,8 @@ async function main() {
     program
     .description('Send anonymous kudos to 0xPARC group members')
     .option('--sig <Path To Signature>', 'Specify path to your double-blind signature', "./github_rsa.sig")
-    .option('--gpk <Path To Group Public Keys>', 'Specify path to the group public keys', "./github_user_list_public_keys.json")
+    .option('--path <Path To Json List of Group Public Keys>', 'Specify path to the group public keys', "github_user_list.json")
+    .option('--manual', "Manually enter the list of usernames")
     .parse(process.argv);
     const args = program.parse().opts();
     let message = prompt("Message:");
@@ -355,23 +433,35 @@ async function main() {
         process.exit(1);
     }
     let signaturePath = args.sig.trim();
-    let groupPublicKeysPath = args.gpk.trim();
     let signature;
     try{
-        const signature_file = await fs.readFileSync(signaturePath, 'utf8');
-        signature = signature_file;
+        signature = await fs.readFileSync(signaturePath, 'utf8').trim();
     } catch (error) {
         console.error('Error reading signature file:', error);
         process.exit(1);
     }
-    let groupPublicKeys;
-    try{
-        const groupPublicKeys_file = await fs.readFileSync(groupPublicKeysPath, 'utf8');
-        groupPublicKeys = JSON.parse(groupPublicKeys_file);
-    } catch (error) {
-        console.error('Error reading group public keys file:', error);
-        process.exit(1);
+    let groupListArray;
+    if (args.manual) {
+        console.log("Manually entering the list of usernames");
+        const prompt = require('prompt-sync')();
+        console.log("Enter the list of usernames. Press enter to add a username. Type 'done' when you are finished.");
+        groupListArray = [];
+        while(true){
+            const member = prompt("Enter the next username: ");
+            if (member === 'done') {
+                break;
+            }
+            groupListArray.push(member);
+        }
+        fs.writeFileSync("github_user_list.json", JSON.stringify(groupListArray, null, 2));
+        console.log("groupListArray:", groupListArray);
+        console.log("Group list saved to github_user_list.json");
+    } else{
+        const groupList = await fs.readFileSync(args.path, 'utf8');
+        groupListArray = JSON.parse(groupList);
     }
+    
+    const groupPublicKeys = await scrapePublicKeys(groupListArray)
     const listOfUsernames = Object.keys(groupPublicKeys.group_members);
     const now = new Date();
     const year = now.getFullYear();

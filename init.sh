@@ -3,7 +3,7 @@ set -e
 
 CIRCUIT_DIR="./circuit_files"
 CIRCUIT_URL_BASE="https://github.com/Weobe/double-blind-app/releases/download/circuit-files"
-
+CLONE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 download() {
   local url="$1"
@@ -52,8 +52,9 @@ install_commands() {
       exit 1
     fi
 
-    cp "$src" "$tgt"
-    chmod +x "$tgt"
+    ln -sf "$CLONE_DIR/$src" "$tgt"
+
+    chmod +x "$CLONE_DIR/$src"
     echo "✅ Installed '$tgt'"
   done
 }
@@ -75,8 +76,8 @@ download_circuit_files
 echo "Setting up environment..."
 
 install_commands \
-                "./send-kudos.sh" "send-kudos" \
-                "./edit-kudos-group.sh" "edit-kudos-group"
+                "send-kudos.sh" "send-kudos" \
+                "edit-kudos-group.sh" "edit-kudos-group"
 
 ensure_path_in_shell_rc
 # Final message
