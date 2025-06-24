@@ -30,9 +30,7 @@ Generating proof...
 Success: Email sent! Server said: ...
 ```
 
-To change who is included in group signature, edit `github_user_list.json` and run
-```edit-kudos-group```
-You can also add the group members manually by running
+To change who is included in group signature, edit `github_user_list.json` or add the group members manually by running
 ```
 edit-kudos-group --manual
 ```
